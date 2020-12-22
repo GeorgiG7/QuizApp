@@ -5,7 +5,29 @@ import android.app.Application;
 import com.example.quizapp.di.ApplicationComponent;
 import com.example.quizapp.di.DaggerApplicationComponent;
 
-public class QuizApplication extends Application {
+import javax.inject.Inject;
 
-    ApplicationComponent applicationComponent = DaggerApplicationComponent.create();
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasAndroidInjector;
+
+public class QuizApplication extends Application implements HasAndroidInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Object> activityDispatchingAndroidInjector;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        DaggerApplicationComponent.builder()
+                .applicationBind(this)
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    public AndroidInjector<Object> androidInjector() {
+        return activityDispatchingAndroidInjector;
+    }
 }
