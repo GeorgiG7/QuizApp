@@ -2,6 +2,8 @@ package com.example.quizapp.view.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,11 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.quizapp.R;
+import com.example.quizapp.databinding.FragmentQuizBinding;
 
-public class QuizFragment extends BaseFragment {
+import javax.inject.Inject;
+
+public class QuizFragment extends BaseFragment<FragmentQuizBinding> {
+
+    @Inject
+    public QuizFragment() {
+    }
 
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_quiz;
     }
 }

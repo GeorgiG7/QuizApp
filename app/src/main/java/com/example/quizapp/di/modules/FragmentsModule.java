@@ -6,6 +6,7 @@ import com.example.quizapp.view.fragments.ScoreboardFragment;
 import javax.inject.Singleton;
 
 import dagger.Module;
+import dagger.Provides;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
