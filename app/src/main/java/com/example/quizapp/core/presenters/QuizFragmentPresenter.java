@@ -6,4 +6,8 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
 
     private QuizFragmentContract.ViewListener viewListener;
 
+    @Override
+    public void setViewListener(QuizFragmentContract.ViewListener viewListener) {
+        this.viewListener = viewListener;
+    }
 }

@@ -4,5 +4,7 @@ public interface QuizFragmentContract {
 
     interface ViewListener{}
 
-    interface PresenterListener{}
+    interface PresenterListener{
+        void setViewListener(ViewListener viewListener);
+    }
 }

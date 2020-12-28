@@ -4,5 +4,7 @@ public interface ScoreboardFragmentContract {
 
     interface ViewListener{}
 
-    interface PresenterListener{}
+    interface PresenterListener{
+        void setViewListener(ScoreboardFragmentContract.ViewListener viewListener);
+    }
 }

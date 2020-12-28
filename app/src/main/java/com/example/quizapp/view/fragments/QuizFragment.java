@@ -11,11 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.quizapp.R;
+import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.databinding.FragmentQuizBinding;
 
 import javax.inject.Inject;
 
-public class QuizFragment extends BaseFragment<FragmentQuizBinding> {
+public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements QuizFragmentContract.ViewListener {
+
+    @Inject
+    QuizFragmentContract.PresenterListener presenterListener;
 
     @Inject
     public QuizFragment() {
@@ -23,7 +27,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> {
 
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
-
+        presenterListener.setViewListener(this);
     }
 
     @Override
