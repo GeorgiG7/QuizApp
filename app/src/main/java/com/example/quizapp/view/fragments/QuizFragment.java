@@ -1,5 +1,7 @@
 package com.example.quizapp.view.fragments;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
@@ -41,13 +44,15 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     }
 
     @Override
-    public void setQuestions(String question, List<String> answers) {
+    public void setQuestions(String question, List<String> answers, String correctAnswer) {
         binding.question.setText(question);
         binding.radioGroup.removeAllViews();
         for (String answer: answers) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setText(answer);
+            if (answer.equals(correctAnswer)) radioButton.setId(R.id.correct_answer_radio_button);
             binding.radioGroup.addView(radioButton);
         }
+        getActivity().findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
     }
 }

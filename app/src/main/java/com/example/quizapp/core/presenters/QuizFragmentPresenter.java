@@ -54,7 +54,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         Random random = new Random();
         int pos = random.nextInt(allAnswers.size());
         allAnswers.add(pos, question.getCorrectAnswer());
-        viewListener.setQuestions(question.getQuestion(), allAnswers);
+        viewListener.setQuestions(question.getQuestion(), allAnswers, question.getCorrectAnswer());
     }
 
 
