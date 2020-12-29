@@ -10,7 +10,7 @@ public class Question {
     String question;
     @SerializedName("correct_answer")
     String correctAnswer;
-    @SerializedName("incorrect_answer")
+    @SerializedName("incorrect_answers")
     List<String> incorrectAnswers;
 
     public String getQuestion() {
