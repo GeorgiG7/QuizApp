@@ -31,7 +31,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_quiz;
+    protected FragmentQuizBinding inflateBinding() {
+        return FragmentQuizBinding.inflate(LayoutInflater.from(getContext()));
     }
 }

@@ -32,9 +32,10 @@ public class ScoreboardFragment extends BaseFragment<FragmentScoreboardBinding> 
     }
 
     @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_scoreboard;
+    protected FragmentScoreboardBinding inflateBinding() {
+        return FragmentScoreboardBinding.inflate(LayoutInflater.from(getContext()));
     }
+
 
 
 }

@@ -9,12 +9,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
+import androidx.viewbinding.ViewBinding;
 
 import dagger.android.support.DaggerFragment;
 
-public abstract class BaseFragment<T extends ViewDataBinding> extends DaggerFragment {
+public abstract class BaseFragment<T extends ViewBinding> extends DaggerFragment {
 
     protected T binding;
 
@@ -22,7 +21,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends DaggerFrag
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false);
+        binding = inflateBinding();
         return binding.getRoot();
     }
 
@@ -36,7 +35,7 @@ public abstract class BaseFragment<T extends ViewDataBinding> extends DaggerFrag
 
     protected abstract void onFragmentCreated(View view, Bundle savedInstanceState);
 
-    protected abstract int getLayoutRes();
+    protected abstract T inflateBinding();
 
 
 }
