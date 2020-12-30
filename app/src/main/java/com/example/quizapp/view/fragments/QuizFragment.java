@@ -36,6 +36,15 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
         presenterListener.setViewListener(this);
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion());
+        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId != R.id.correct_answer_radio_button) {
+                    getActivity().findViewById(checkedId).setBackgroundColor(Color.RED);
+                }
+                getActivity().findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
+            }
+        });
     }
 
     @Override
@@ -53,6 +62,5 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             if (answer.equals(correctAnswer)) radioButton.setId(R.id.correct_answer_radio_button);
             binding.radioGroup.addView(radioButton);
         }
-        getActivity().findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
     }
 }
