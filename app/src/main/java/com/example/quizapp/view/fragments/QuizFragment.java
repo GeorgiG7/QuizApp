@@ -1,16 +1,9 @@
 package com.example.quizapp.view.fragments;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -19,6 +12,7 @@ import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.databinding.FragmentQuizBinding;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -31,20 +25,11 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     public QuizFragment() {
     }
 
-
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
         presenterListener.setViewListener(this);
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion());
-        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId != R.id.correct_answer_radio_button) {
-                    getActivity().findViewById(checkedId).setBackgroundColor(Color.RED);
-                }
-                getActivity().findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
-            }
-        });
+        binding.radioGroup.setOnCheckedChangeListener((this::validateChosenAnswer));
     }
 
     @Override
@@ -62,5 +47,12 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             if (answer.equals(correctAnswer)) radioButton.setId(R.id.correct_answer_radio_button);
             binding.radioGroup.addView(radioButton);
         }
+    }
+
+    private void validateChosenAnswer(RadioGroup group, int checkedId){
+        if (checkedId != R.id.correct_answer_radio_button) {
+            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.RED);
+        }
+        Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
     }
 }
