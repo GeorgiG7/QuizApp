@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.QuizFragment">
     <!-- TODO: Update blank fragment layout -->
+
+
     <TextView
         android:id="@+id/question"
         android:layout_width="wrap_content"
