@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     }
 
     private void tabManaging() {
-        binding.view.setAdapter(new FragmentAdapter(this));
+        binding.view.setAdapter(new FragmentAdapter(this, quizFragment, scoreboardFragment));
         new TabLayoutMediator(binding.tabLayot, binding.view, (tab, position) -> {
             if (position == FragmentAdapter.QUIZ_TAB_POSITION) {
                 tab.setText("Quiz");

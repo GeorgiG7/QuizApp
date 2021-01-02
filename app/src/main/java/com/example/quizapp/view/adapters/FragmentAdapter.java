@@ -8,20 +8,28 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.quizapp.view.fragments.QuizFragment;
 import com.example.quizapp.view.fragments.ScoreboardFragment;
 
+import javax.inject.Inject;
+
 public class FragmentAdapter extends FragmentStateAdapter {
     public static final int QUIZ_TAB_POSITION = 0;
 
-    public FragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
+    private QuizFragment quizFragment;
+
+    private ScoreboardFragment scoreboardFragment;
+
+    public FragmentAdapter(@NonNull FragmentActivity fragmentActivity, QuizFragment quizFragment, ScoreboardFragment scoreboardFragment) {
         super(fragmentActivity);
+        this.quizFragment = quizFragment;
+        this.scoreboardFragment = scoreboardFragment;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         if (position == QUIZ_TAB_POSITION) {
-            return new QuizFragment();
+            return quizFragment;
         }
-        return new ScoreboardFragment();
+        return scoreboardFragment;
     }
 
     @Override
