@@ -1,18 +1,13 @@
 package com.example.quizapp.view.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
-import androidx.annotation.NonNull;
+import android.widget.TextView;
 
 import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
@@ -26,7 +21,7 @@ import javax.inject.Inject;
 public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements QuizFragmentContract.ViewListener {
 
 
-    int counter = 5;
+    int counter = 0;
 
     @Inject
     QuizFragmentContract.PresenterListener presenterListener;
@@ -44,11 +39,6 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
     protected FragmentQuizBinding inflateBinding() {
         return FragmentQuizBinding.inflate(LayoutInflater.from(getContext()));
     }
@@ -63,23 +53,33 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             if (answer.equals(correctAnswer)) radioButton.setId(R.id.correct_answer_radio_button);
             binding.radioGroup.addView(radioButton);
         }
+        setEnabledOrDisabled(false);
     }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.drawer_menu, menu);
-    }
-
-    private void tryT(){
-
-    }
-
 
     private void validateChosenAnswer(RadioGroup group, int checkedId) {
-        if (checkedId != R.id.correct_answer_radio_button) {
-            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.RED);
+        if (checkedId == R.id.correct_answer_radio_button) {
+            counter++;
+            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.GREEN);
         }
-        Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
+        else{
+            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.RED);
+            Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
+            counter=0;
+        }
+        updateCounterTry();
+        setEnabledOrDisabled(true);
     }
+
+    @SuppressLint("SetTextI18n")
+    public void updateCounterTry() {
+        ((TextView) Objects.requireNonNull(getActivity()).findViewById(R.id.counter_txt)).setText("" + counter);
+    }
+
+    private void setEnabledOrDisabled(boolean isEnabled){
+        for (int i = 0; i <binding.radioGroup.getChildCount() ; i++) {
+            binding.radioGroup.getChildAt(i).setEnabled(!isEnabled);
+            ((RadioButton)binding.radioGroup.getChildAt(i)).setTextColor(Color.BLACK);
+        }
+    }
+
 }

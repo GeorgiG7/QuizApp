@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/correct_answers_counter"
-        android:title="@string/correct_answers_streak_counter"
-        app:showAsAction="always"
+        android:title="sadsad"
+        app:showAsAction="never"
         />
 </menu>

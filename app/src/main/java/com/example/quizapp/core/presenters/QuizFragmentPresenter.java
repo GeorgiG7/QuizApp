@@ -1,6 +1,8 @@
 package com.example.quizapp.core.presenters;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.quizapp.api.Api;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
@@ -23,7 +25,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     }
 
     public void getQuiz() {
-        Api.getInstance().getQuiz(12, new Api.ApiListener() {
+        Api.getInstance().getQuiz(14, new Api.ApiListener() {
             @Override
             public void onQuizReceived(Quiz quiz) {
                 questionList = quiz.getQuestions();
@@ -52,7 +54,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         index++;
         List<String> allAnswers = question.getIncorrectAnswers();
         Random random = new Random();
-        int pos = random.nextInt(allAnswers.size());
+        int pos = random.nextInt(allAnswers.size() + 1);
         allAnswers.add(pos, question.getCorrectAnswer());
         viewListener.setQuestions(question.getQuestion(), allAnswers, question.getCorrectAnswer());
     }

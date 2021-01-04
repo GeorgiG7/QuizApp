@@ -1,5 +1,8 @@
 package com.example.quizapp.core.constracts;
 
+import android.view.Menu;
+import android.view.MenuItem;
+
 import java.util.List;
 
 public interface QuizFragmentContract {
@@ -12,7 +15,6 @@ public interface QuizFragmentContract {
         void setViewListener(ViewListener viewListener);
 
         void getNextQuestion();
-
 
     }
 }
