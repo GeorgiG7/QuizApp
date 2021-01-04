@@ -1,19 +1,13 @@
 package com.example.quizapp.view.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
@@ -62,11 +56,6 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(false);
     }
 
-    @Override
-    public void updateCounter(MenuItem menuItem) {
-        menuItem.setTitle("" + counter);
-    }
-
     private void validateChosenAnswer(RadioGroup group, int checkedId) {
         if (checkedId == R.id.correct_answer_radio_button) {
             counter++;
@@ -81,8 +70,9 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(true);
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateCounterTry() {
-        ((TextView)getActivity().findViewById(R.id.counter_txt)).setText("" + counter);
+        ((TextView) Objects.requireNonNull(getActivity()).findViewById(R.id.counter_txt)).setText("" + counter);
     }
 
     private void setEnabledOrDisabled(boolean isEnabled){

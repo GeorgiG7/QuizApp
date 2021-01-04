@@ -9,15 +9,12 @@ public interface QuizFragmentContract {
 
     interface ViewListener{
         void setQuestions(String question, List<String> answers, String correctAnswer);
-        void updateCounter(MenuItem menuItem);
     }
 
     interface PresenterListener{
         void setViewListener(ViewListener viewListener);
 
         void getNextQuestion();
-
-        void onChosenAnswer(MenuItem menuItem);
 
     }
 }

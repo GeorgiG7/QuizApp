@@ -49,11 +49,6 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
 
     }
 
-    @Override
-    public void onChosenAnswer(MenuItem menuItem) {
-        viewListener.updateCounter(menuItem);
-    }
-
     private void setQuestionsInView() {
         Question question = questionList.get(index);
         index++;
