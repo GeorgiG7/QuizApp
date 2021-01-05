@@ -77,7 +77,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     public void setQuestions(String question, List<String> answers, String correctAnswer) {
         binding.question.setText(question);
