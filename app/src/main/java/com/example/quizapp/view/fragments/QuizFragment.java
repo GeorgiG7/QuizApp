@@ -46,6 +46,11 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setListeners();
     }
 
+    @Override
+    protected FragmentQuizBinding inflateBinding() {
+        return FragmentQuizBinding.inflate(LayoutInflater.from(getContext()));
+    }
+
     private void setListeners() {
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category));
         binding.radioGroup.setOnCheckedChangeListener((this::setCheckedRadioButtonIdLocally));
@@ -53,16 +58,26 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     }
 
     @Override
-    public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        menu.setGroupEnabled(R.id.category_items_group, counter == 0);
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.drawer_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
-    protected FragmentQuizBinding inflateBinding() {
-        return FragmentQuizBinding.inflate(LayoutInflater.from(getContext()));
-    }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        switch (item.getItemId()) {
+            case R.id.category_geography:
+                this.category = 22;
+                break;
+            case R.id.category_music:
+                this.category = 12;
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
     @Override
     public void setQuestions(String question, List<String> answers, String correctAnswer) {
         binding.question.setText(question);
@@ -76,7 +91,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(false);
     }
 
-    private void setCheckedRadioButtonIdLocally(RadioGroup group, int checkedId){
+    private void setCheckedRadioButtonIdLocally(RadioGroup group, int checkedId) {
         checkedRadioButtonId = checkedId;
         binding.btnSubmitAnswer.setEnabled(true);
     }
@@ -85,11 +100,10 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         if (checkedRadioButtonId == R.id.correct_answer_radio_button) {
             counter++;
             Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.GREEN);
-        }
-        else{
+        } else {
             Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.RED);
             Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
-            counter=0;
+            counter = 0;
         }
         updateCounterTry();
         setEnabledOrDisabled(true);
@@ -99,38 +113,15 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
 
     }
 
+    private void setEnabledOrDisabled(boolean isEnabled) {
+        for (int i = 0; i < binding.radioGroup.getChildCount(); i++) {
+            binding.radioGroup.getChildAt(i).setEnabled(!isEnabled);
+            ((RadioButton) binding.radioGroup.getChildAt(i)).setTextColor(Color.BLACK);
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     public void updateCounterTry() {
         ((TextView) Objects.requireNonNull(getActivity()).findViewById(R.id.counter_txt)).setText("" + counter);
-    }
-
-    private void setEnabledOrDisabled(boolean isEnabled){
-        for (int i = 0; i <binding.radioGroup.getChildCount() ; i++) {
-            binding.radioGroup.getChildAt(i).setEnabled(!isEnabled);
-            ((RadioButton)binding.radioGroup.getChildAt(i)).setTextColor(Color.BLACK);
-        }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.drawer_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.category_geography:
-                this.category = 22;
-                break;
-            case R.id.category_music:
-                this.category = 12;
-                break;
-        }
-
-
-        return super.onOptionsItemSelected(item);
     }
 }
