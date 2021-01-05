@@ -43,6 +43,10 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(getActivity().findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         presenterListener.setViewListener(this);
+        setListeners();
+    }
+
+    private void setListeners() {
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category));
         binding.radioGroup.setOnCheckedChangeListener((this::validateChosenAnswer));
         binding.btnSubmitAnswer.setOnClickListener((this::evaluateChosenAnswer));
@@ -64,7 +68,6 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             binding.radioGroup.addView(radioButton);
         }
         setEnabledOrDisabled(false);
-        binding.btnSubmitAnswer.setEnabled(false);
     }
 
     private void validateChosenAnswer(RadioGroup group, int checkedId){
@@ -84,6 +87,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         }
         updateCounterTry();
         setEnabledOrDisabled(true);
+        binding.btnSubmitAnswer.setEnabled(false);
     }
 
     @SuppressLint("SetTextI18n")
