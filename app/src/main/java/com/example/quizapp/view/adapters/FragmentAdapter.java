@@ -13,9 +13,9 @@ import javax.inject.Inject;
 public class FragmentAdapter extends FragmentStateAdapter {
     public static final int QUIZ_TAB_POSITION = 0;
 
-    private QuizFragment quizFragment;
+    private final QuizFragment quizFragment;
 
-    private ScoreboardFragment scoreboardFragment;
+    private final ScoreboardFragment scoreboardFragment;
 
     public FragmentAdapter(@NonNull FragmentActivity fragmentActivity, QuizFragment quizFragment, ScoreboardFragment scoreboardFragment) {
         super(fragmentActivity);

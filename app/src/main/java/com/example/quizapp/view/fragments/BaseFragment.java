@@ -1,8 +1,6 @@
 package com.example.quizapp.view.fragments;
 
-import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
