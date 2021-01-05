@@ -4,10 +4,16 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
@@ -21,7 +27,9 @@ import javax.inject.Inject;
 public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements QuizFragmentContract.ViewListener {
 
 
-    int counter = 0;
+    private int counter = 0;
+    private int category = 10;
+    private int checkedRadioButtonId;
 
     @Inject
     QuizFragmentContract.PresenterListener presenterListener;
@@ -32,10 +40,12 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
 
     @Override
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(getActivity().findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
         presenterListener.setViewListener(this);
-        binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion());
+        binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category));
         binding.radioGroup.setOnCheckedChangeListener((this::validateChosenAnswer));
+        binding.btnSubmitAnswer.setOnClickListener((this::evaluateChosenAnswer));
     }
 
     @Override
@@ -54,15 +64,21 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             binding.radioGroup.addView(radioButton);
         }
         setEnabledOrDisabled(false);
+        binding.btnSubmitAnswer.setEnabled(false);
     }
 
-    private void validateChosenAnswer(RadioGroup group, int checkedId) {
-        if (checkedId == R.id.correct_answer_radio_button) {
+    private void validateChosenAnswer(RadioGroup group, int checkedId){
+        checkedRadioButtonId = checkedId;
+        binding.btnSubmitAnswer.setEnabled(true);
+    }
+
+    private void evaluateChosenAnswer(View view) {
+        if (checkedRadioButtonId == R.id.correct_answer_radio_button) {
             counter++;
-            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.GREEN);
+            Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.GREEN);
         }
         else{
-            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.RED);
+            Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.RED);
             Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
             counter=0;
         }
@@ -82,4 +98,26 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.drawer_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.category_geography:
+                this.category = 22;
+                break;
+            case R.id.category_music:
+                this.category = 12;
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 }

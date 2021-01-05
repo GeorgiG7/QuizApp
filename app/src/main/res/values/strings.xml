@@ -4,4 +4,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="correct_answers_streak_counter">0</string>
     <string name="quiz_app">QuizApp</string>
+    <string name="quiz">Quiz</string>
+    <string name="next_question">Next Question</string>
+    <string name="submit_answer">Submit answer</string>
+    <string name="scoreboard">Scoreboard</string>
+    <string name="geography">Geography</string>
+    <string name="music">Music</string>
 </resources>

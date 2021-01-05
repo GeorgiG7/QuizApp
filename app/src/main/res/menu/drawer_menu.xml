@@ -4,7 +4,13 @@
 
 
     <item
-        android:title="sadsad"
-        app:showAsAction="never"
-        />
+        android:id="@+id/category_geography"
+        android:title="@string/geography"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_music"
+        android:title="@string/music"
+        app:showAsAction="never" />
+
 </menu>

@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragments.QuizFragment">
-    <!-- TODO: Update blank fragment layout -->
 
 
     <TextView
         android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quiz"
+        android:text="@string/quiz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +29,18 @@
         android:id="@+id/btn_next_question"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:text="Next Question"
+        android:text="@string/next_question"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_submit_answer"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:enabled="false"
+        android:text="@string/submit_answer"
+        app:layout_constraintBottom_toTopOf="@id/btn_next_question"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

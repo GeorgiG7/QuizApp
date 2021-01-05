@@ -14,7 +14,7 @@ public interface QuizFragmentContract {
     interface PresenterListener{
         void setViewListener(ViewListener viewListener);
 
-        void getNextQuestion();
+        void getNextQuestion(int category);
 
     }
 }

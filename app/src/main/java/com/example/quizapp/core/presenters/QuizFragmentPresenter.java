@@ -1,9 +1,5 @@
 package com.example.quizapp.core.presenters;
 
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import com.example.quizapp.api.Api;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.model.Question;
@@ -18,14 +14,15 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     List<Question> questionList = new ArrayList<>();
     QuizFragmentContract.ViewListener viewListener;
     int index = 0;
+    int quizCategory = 12;
 
     @Override
     public void setViewListener(QuizFragmentContract.ViewListener viewListener) {
         this.viewListener = viewListener;
     }
 
-    public void getQuiz() {
-        Api.getInstance().getQuiz(14, new Api.ApiListener() {
+    public void getQuiz(int category) {
+        Api.getInstance().getQuiz(category, new Api.ApiListener() {
             @Override
             public void onQuizReceived(Quiz quiz) {
                 questionList = quiz.getQuestions();
@@ -40,10 +37,11 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     }
 
     @Override
-    public void getNextQuestion() {
-        if (index == 10 || index == 0) {
+    public void getNextQuestion(int category) {
+        if (index == 10 || index == 0 || category != quizCategory) {
             index = 0;
-            getQuiz();
+            getQuiz(category);
+            quizCategory = category;
         } else
             setQuestionsInView();
 
