@@ -2,15 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <group
+        android:id="@+id/category_items_group"
+        >
+        <item
+            android:id="@+id/category_geography"
+            android:title="@string/geography"
+            app:showAsAction="never" />
 
-    <item
-        android:id="@+id/category_geography"
-        android:title="@string/geography"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/category_music"
-        android:title="@string/music"
-        app:showAsAction="never" />
-
+        <item
+            android:id="@+id/category_music"
+            android:title="@string/music"
+            app:showAsAction="never" />
+    </group>
 </menu>

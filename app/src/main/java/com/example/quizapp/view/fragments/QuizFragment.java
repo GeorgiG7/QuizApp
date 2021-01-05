@@ -48,8 +48,14 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
 
     private void setListeners() {
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category));
-        binding.radioGroup.setOnCheckedChangeListener((this::validateChosenAnswer));
-        binding.btnSubmitAnswer.setOnClickListener((this::evaluateChosenAnswer));
+        binding.radioGroup.setOnCheckedChangeListener((this::setCheckedRadioButtonIdLocally));
+        binding.btnSubmitAnswer.setOnClickListener((this::validateChosenAnswer));
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.setGroupEnabled(R.id.category_items_group, counter == 0);
     }
 
     @Override
@@ -70,12 +76,12 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(false);
     }
 
-    private void validateChosenAnswer(RadioGroup group, int checkedId){
+    private void setCheckedRadioButtonIdLocally(RadioGroup group, int checkedId){
         checkedRadioButtonId = checkedId;
         binding.btnSubmitAnswer.setEnabled(true);
     }
 
-    private void evaluateChosenAnswer(View view) {
+    private void validateChosenAnswer(View view) {
         if (checkedRadioButtonId == R.id.correct_answer_radio_button) {
             counter++;
             Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.GREEN);
@@ -87,7 +93,10 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         }
         updateCounterTry();
         setEnabledOrDisabled(true);
+        setHasOptionsMenu(counter == 0);
         binding.btnSubmitAnswer.setEnabled(false);
+
+
     }
 
     @SuppressLint("SetTextI18n")
