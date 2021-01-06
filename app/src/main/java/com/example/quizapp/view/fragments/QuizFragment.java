@@ -52,7 +52,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     }
 
     private void setListeners() {
-        binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category));
+        binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category, this.getContext()));
         binding.radioGroup.setOnCheckedChangeListener((this::setCheckedRadioButtonIdLocally));
         binding.btnSubmitAnswer.setOnClickListener((this::validateChosenAnswer));
     }
@@ -109,8 +109,6 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(true);
         setHasOptionsMenu(counter == 0);
         binding.btnSubmitAnswer.setEnabled(false);
-
-
     }
 
     private void setEnabledOrDisabled(boolean isEnabled) {

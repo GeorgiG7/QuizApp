@@ -1,5 +1,8 @@
 package com.example.quizapp.core.presenters;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.quizapp.api.Api;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.model.Question;
@@ -21,26 +24,25 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         this.viewListener = viewListener;
     }
 
-    public void getQuiz(int category) {
+    public void getQuiz(int category, Context context) {
         Api.getInstance().getQuiz(category, new Api.ApiListener() {
             @Override
             public void onQuizReceived(Quiz quiz) {
                 questionList = quiz.getQuestions();
                 setQuestionsInView();
             }
-
             @Override
             public void onFailure() {
-
+                Toast.makeText(context, "Couldn't tetrieve data from Internet", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void getNextQuestion(int category) {
+    public void getNextQuestion(int category, Context context) {
         if (index == 10 || index == 0 || category != quizCategory) {
             index = 0;
-            getQuiz(category);
+            getQuiz(category, context);
             quizCategory = category;
         } else
             setQuestionsInView();

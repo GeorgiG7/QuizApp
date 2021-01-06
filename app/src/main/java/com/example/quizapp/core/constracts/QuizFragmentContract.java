@@ -1,5 +1,6 @@
 package com.example.quizapp.core.constracts;
 
+import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,7 +15,7 @@ public interface QuizFragmentContract {
     interface PresenterListener{
         void setViewListener(ViewListener viewListener);
 
-        void getNextQuestion(int category);
+        void getNextQuestion(int category, Context context);
 
     }
 }
