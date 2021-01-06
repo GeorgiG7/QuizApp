@@ -33,7 +33,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
             }
             @Override
             public void onFailure() {
-                Toast.makeText(context, "Couldn't tetrieve data from Internet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Couldn't retrieve data from Internet", Toast.LENGTH_SHORT).show();
             }
         });
     }
