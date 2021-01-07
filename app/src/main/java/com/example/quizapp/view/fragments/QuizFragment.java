@@ -26,10 +26,7 @@ import javax.inject.Inject;
 
 public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements QuizFragmentContract.ViewListener {
 
-
-    private int counter = 0;
     private int category = 10;
-    private int checkedRadioButtonId;
 
     @Inject
     QuizFragmentContract.PresenterListener presenterListener;
@@ -53,8 +50,8 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
 
     private void setListeners() {
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category, this.getContext()));
-        binding.radioGroup.setOnCheckedChangeListener((this::setCheckedRadioButtonIdLocally));
-        binding.btnSubmitAnswer.setOnClickListener((this::validateChosenAnswer));
+        binding.radioGroup.setOnCheckedChangeListener((group, checkedId) -> presenterListener.radioGroupChecked(checkedId));
+        binding.btnSubmitAnswer.setOnClickListener((view) -> presenterListener.submitAnswer(((RadioButton)getActivity().findViewById(presenterListener.getCheckedId())).getText().toString()));
     }
 
     @Override
@@ -91,24 +88,22 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(false);
     }
 
-    private void setCheckedRadioButtonIdLocally(RadioGroup group, int checkedId) {
-        checkedRadioButtonId = checkedId;
+    @Override
+    public void unableRadioGroup() {
         binding.btnSubmitAnswer.setEnabled(true);
     }
 
-    private void validateChosenAnswer(View view) {
-        if (checkedRadioButtonId == R.id.correct_answer_radio_button) {
-            counter++;
-            Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.GREEN);
-        } else {
-            Objects.requireNonNull(getActivity()).findViewById(checkedRadioButtonId).setBackgroundColor(Color.RED);
-            Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
-            counter = 0;
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void setCorrectAnswerStreakCounterAndShowRightAnswer(int counter, int checkedId) {
+        ((TextView) Objects.requireNonNull(getActivity()).findViewById(R.id.counter_txt)).setText("" + counter);
+        if (checkedId != R.id.correct_answer_radio_button) {
+            Objects.requireNonNull(getActivity()).findViewById(checkedId).setBackgroundColor(Color.RED);
         }
-        updateCounterTry();
+        Objects.requireNonNull(getActivity()).findViewById(R.id.correct_answer_radio_button).setBackgroundColor(Color.GREEN);
         setEnabledOrDisabled(true);
-        setHasOptionsMenu(counter == 0);
         binding.btnSubmitAnswer.setEnabled(false);
+        setHasOptionsMenu(checkedId != R.id.correct_answer_radio_button);
     }
 
     private void setEnabledOrDisabled(boolean isEnabled) {
@@ -116,10 +111,5 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             binding.radioGroup.getChildAt(i).setEnabled(!isEnabled);
             ((RadioButton) binding.radioGroup.getChildAt(i)).setTextColor(Color.BLACK);
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void updateCounterTry() {
-        ((TextView) Objects.requireNonNull(getActivity()).findViewById(R.id.counter_txt)).setText("" + counter);
     }
 }

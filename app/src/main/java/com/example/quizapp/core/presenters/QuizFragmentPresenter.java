@@ -1,6 +1,7 @@
 package com.example.quizapp.core.presenters;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.quizapp.api.Api;
@@ -16,15 +17,21 @@ import java.util.Random;
 
 public class QuizFragmentPresenter implements QuizFragmentContract.PresenterListener {
 
-    List<Question> questionList = new ArrayList<>();
-    QuizFragmentContract.ViewListener viewListener;
-    int index = 0;
-    int quizCategory = 12;
-    ScoreDbService service;
+    private List<Question> questionList = new ArrayList<>();
+    private QuizFragmentContract.ViewListener viewListener;
+    private int index = 0;
+    private int counter = 0;
+    private int quizCategory = 12;
+    private int checkedId;
+    private ScoreDbService service;
 
     @Override
     public void setViewListener(QuizFragmentContract.ViewListener viewListener) {
         this.viewListener = viewListener;
+    }
+
+    public int getCheckedId() {
+        return checkedId;
     }
 
     public void getQuiz(int category, Context context) {
@@ -34,6 +41,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
                 questionList = quiz.getQuestions();
                 setQuestionsInView();
             }
+
             @Override
             public void onFailure() {
                 Toast.makeText(context, "Couldn't retrieve data from Internet", Toast.LENGTH_SHORT).show();
@@ -53,17 +61,19 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     }
 
     @Override
-    public void setCategory(int category) {
-
+    public void submitAnswer(String submittedAnswer) {
+        if (submittedAnswer.equals(questionList.get(index - 1).getCorrectAnswer())) {
+            counter++;
+        } else {
+            counter = 0;
+        }
+        viewListener.setCorrectAnswerStreakCounterAndShowRightAnswer(counter, checkedId);
     }
 
-    void getALlUsers(){
-        service.getAllScores(new ScoreDbService.DataListener<List<Score>>() {
-            @Override
-            public void onData(List<Score> data) {
-                
-            }
-        });
+    @Override
+    public void radioGroupChecked(int checkedId) {
+        this.checkedId = checkedId;
+        viewListener.unableRadioGroup();
     }
 
     private void setQuestionsInView() {
@@ -75,6 +85,5 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         allAnswers.add(pos, question.getCorrectAnswer());
         viewListener.setQuestions(question.getQuestion(), allAnswers, question.getCorrectAnswer());
     }
-
 
 }
