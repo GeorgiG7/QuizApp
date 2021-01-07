@@ -3,7 +3,7 @@ package com.example.quizapp.core.presenters;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.quizapp.api.Api;
+import com.example.quizapp.model.api.Api;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
