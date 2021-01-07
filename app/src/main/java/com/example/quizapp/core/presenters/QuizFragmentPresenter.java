@@ -7,6 +7,8 @@ import com.example.quizapp.api.Api;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
+import com.example.quizapp.model.database.Score;
+import com.example.quizapp.model.database.ScoreDbService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     QuizFragmentContract.ViewListener viewListener;
     int index = 0;
     int quizCategory = 12;
+    ScoreDbService service;
 
     @Override
     public void setViewListener(QuizFragmentContract.ViewListener viewListener) {
@@ -47,6 +50,20 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         } else
             setQuestionsInView();
 
+    }
+
+    @Override
+    public void setCategory(int category) {
+
+    }
+
+    void getALlUsers(){
+        service.getAllScores(new ScoreDbService.DataListener<List<Score>>() {
+            @Override
+            public void onData(List<Score> data) {
+                
+            }
+        });
     }
 
     private void setQuestionsInView() {
