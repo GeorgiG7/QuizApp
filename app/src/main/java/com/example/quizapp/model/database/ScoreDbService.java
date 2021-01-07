@@ -24,13 +24,13 @@ public class ScoreDbService {
     }
 
 
-
-    public void getAllScores(DataListener<List<Score>> dataListener){
-        threadingProvider.getDbExecutor().execute(() -> {
-            List<Score> allScores = scoreDao.getAllScores();
-            threadingProvider.getMainThread().post(() -> dataListener.onData(allScores));
-        });
-    }
+//
+//    public void getAllScores(DataListener<List<Score>> dataListener){
+//        threadingProvider.getDbExecutor().execute(() -> {
+//            List<Score> allScores = scoreDao.getAllScores();
+//            threadingProvider.getMainThread().post(() -> dataListener.onData(allScores));
+//        });
+//    }
 
 
 

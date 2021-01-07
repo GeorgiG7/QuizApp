@@ -9,5 +9,5 @@ import java.util.List;
 public interface ScoreDao {
 
     
-    List<Score> getAllScores();
+//    List<Score> getAllScores();
 }
