@@ -54,12 +54,6 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     private void setListeners() {
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category, this.getContext()));
         binding.radioGroup.setOnCheckedChangeListener((this::setCheckedRadioButtonIdLocally));
-        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-            }
-        });
         binding.btnSubmitAnswer.setOnClickListener((this::validateChosenAnswer));
     }
 

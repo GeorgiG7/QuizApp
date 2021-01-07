@@ -16,6 +16,6 @@ public interface QuizFragmentContract {
         void setViewListener(ViewListener viewListener);
 
         void getNextQuestion(int category, Context context);
-
+void setCategory(int category);
     }
 }

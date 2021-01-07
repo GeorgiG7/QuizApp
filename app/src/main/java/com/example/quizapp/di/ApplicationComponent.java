@@ -4,6 +4,7 @@ import com.example.quizapp.QuizApplication;
 import com.example.quizapp.di.modules.ActivityModule;
 import com.example.quizapp.di.modules.ContractsModule;
 import com.example.quizapp.di.modules.FragmentsModule;
+import com.example.quizapp.di.modules.ThreadModule;
 
 import javax.inject.Singleton;
 
@@ -18,7 +19,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidInjectionModule.class,
         ActivityModule.class,
         FragmentsModule.class,
-        ContractsModule.class
+        ContractsModule.class,
+        ThreadModule.class
 
 })
 public interface ApplicationComponent {
