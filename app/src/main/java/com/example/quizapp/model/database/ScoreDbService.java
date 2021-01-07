@@ -19,7 +19,7 @@ public class ScoreDbService {
         scoreDao = Database.getInstance(context).scoreDao();
     }
 
-    
+
 
     public interface DataListener<T> {
         void onData(T data);

@@ -1,4 +1,4 @@
-package com.example.quizapp.model.api;
+package com.example.quizapp.api;
 
 import com.example.quizapp.model.Quiz;
 
