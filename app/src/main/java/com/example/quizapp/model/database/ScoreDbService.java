@@ -26,18 +26,9 @@ public class ScoreDbService {
 
 
     public void getAllScores(DataListener<List<Score>> dataListener){
-        threadingProvider.getDbExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-
-                List<Score> allScores = scoreDao.getAllScores();
-                threadingProvider.getMainThread().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        dataListener.onData(allScores);
-                    }
-                });
-            }
+        threadingProvider.getDbExecutor().execute(() -> {
+            List<Score> allScores = scoreDao.getAllScores();
+            threadingProvider.getMainThread().post(() -> dataListener.onData(allScores));
         });
     }
 
