@@ -16,7 +16,7 @@ public interface QuizFragmentContract {
     }
 
     interface PresenterListener{
-        void setViewListener(ViewListener viewListener);
+        void setViewListener(ViewListener viewListener, Context context);
 
         void getNextQuestion(int category, Context context);
 

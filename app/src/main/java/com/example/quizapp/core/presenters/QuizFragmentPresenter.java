@@ -33,7 +33,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     ScoreDbService service;
 
     @Override
-    public void setViewListener(QuizFragmentContract.ViewListener viewListener) {
+    public void setViewListener(QuizFragmentContract.ViewListener viewListener, Context context) {
         this.viewListener = viewListener;
     }
 

@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.example.quizapp.core.treadPool.HandlerMainThread;
 import com.example.quizapp.core.treadPool.MainThread;
+import com.example.quizapp.core.treadPool.ThreadingProvider;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -17,6 +18,11 @@ import dagger.Provides;
 
 @Module
 public class ThreadModule {
+
+//    @Provides
+//    public ThreadingProvider provideThreadingProvider(){
+//        return new ThreadingProvider();
+//    }
 
     @Provides
     @Singleton
