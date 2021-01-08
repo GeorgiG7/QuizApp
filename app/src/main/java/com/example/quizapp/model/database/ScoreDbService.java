@@ -32,6 +32,10 @@ public class ScoreDbService {
 //        });
 //    }
 
+    public void saveScore(Score score){
+        threadingProvider.getDbExecutor().execute(() -> scoreDao.saveScore(score));
+    }
+
 
 
     public interface DataListener<T> {

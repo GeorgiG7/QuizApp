@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 public class Database {
+
     private static AppDataBase instance;
     public static final String DATABASE_NAME = "com.example.quizapp.model.database";
 

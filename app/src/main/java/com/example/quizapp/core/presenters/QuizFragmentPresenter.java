@@ -1,5 +1,6 @@
 package com.example.quizapp.core.presenters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,9 +12,14 @@ import com.example.quizapp.model.Quiz;
 import com.example.quizapp.model.database.Score;
 import com.example.quizapp.model.database.ScoreDbService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import javax.inject.Inject;
 
 public class QuizFragmentPresenter implements QuizFragmentContract.PresenterListener {
 
@@ -23,7 +29,8 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     private int counter = 0;
     private int quizCategory = 12;
     private int checkedId;
-    private ScoreDbService service;
+    @Inject
+    ScoreDbService service;
 
     @Override
     public void setViewListener(QuizFragmentContract.ViewListener viewListener) {
@@ -33,6 +40,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     public int getCheckedId() {
         return checkedId;
     }
+
 
     public void getQuiz(int category, Context context) {
         Api.getInstance().getQuiz(category, new Api.ApiListener() {
@@ -65,6 +73,9 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         if (submittedAnswer.equals(questionList.get(index - 1).getCorrectAnswer())) {
             counter++;
         } else {
+            if (counter != 0) {
+                saveScore();
+            }
             counter = 0;
         }
         viewListener.setCorrectAnswerStreakCounterAndShowRightAnswer(counter, checkedId);
@@ -86,4 +97,15 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         viewListener.setQuestions(question.getQuestion(), allAnswers, question.getCorrectAnswer());
     }
 
+    public void saveScore() {
+        Score score = new Score(getFormattedDate(), counter);
+        service.saveScore(score);
+    }
+
+
+    private String getFormattedDate(){
+        Date date = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
 }

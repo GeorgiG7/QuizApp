@@ -3,6 +3,7 @@ package com.example.quizapp.di;
 import com.example.quizapp.QuizApplication;
 import com.example.quizapp.di.modules.ActivityModule;
 import com.example.quizapp.di.modules.ContractsModule;
+import com.example.quizapp.di.modules.DatabaseModule;
 import com.example.quizapp.di.modules.FragmentsModule;
 import com.example.quizapp.di.modules.ThreadModule;
 
@@ -20,7 +21,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ActivityModule.class,
         FragmentsModule.class,
         ContractsModule.class,
-        ThreadModule.class
+        ThreadModule.class,
+        DatabaseModule.class
 
 })
 public interface ApplicationComponent {
