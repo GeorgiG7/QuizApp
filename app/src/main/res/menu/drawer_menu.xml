@@ -2,17 +2,123 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group
-        android:id="@+id/category_items_group"
-        >
-        <item
-            android:id="@+id/category_geography"
-            android:title="@string/geography"
-            app:showAsAction="never" />
+    <item
+        android:id="@+id/category_general_knowledge"
+        android:title="@string/general_knowledge"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/category_books"
+        android:title="@string/books"
+        app:showAsAction="never" />
 
-        <item
-            android:id="@+id/category_music"
-            android:title="@string/music"
-            app:showAsAction="never" />
-    </group>
+    <item
+        android:id="@+id/category_films"
+        android:title="@string/films"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_music"
+        android:title="@string/music"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_musicals_and_theatres"
+        android:title="@string/musicals_and_theatres"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_television"
+        android:title="@string/television"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_video_games"
+        android:title="@string/video_games"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_board_games"
+        android:title="@string/board_games"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_science_and_nature"
+        android:title="@string/science_and_nature"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_computers"
+        android:title="@string/computers"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_mathematics"
+        android:title="@string/mathematics"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_mythology"
+        android:title="@string/mythology"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_sports"
+        android:title="@string/sports"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_geography"
+        android:title="@string/geography"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_history"
+        android:title="@string/history"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_politics"
+        android:title="@string/politics"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_art"
+        android:title="@string/art"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_celebrities"
+        android:title="@string/celebrities"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_animals"
+        android:title="@string/animals"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_vehicles"
+        android:title="@string/vehicles"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_comics"
+        android:title="@string/comics"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_gadgets"
+        android:title="@string/gadgets"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_japanese_anime_and_manga"
+        android:title="@string/japanese_anime_and_manga"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_cartoons_and_animations"
+        android:title="@string/cartoon_and_animations"
+        app:showAsAction="never" />
+
 </menu>

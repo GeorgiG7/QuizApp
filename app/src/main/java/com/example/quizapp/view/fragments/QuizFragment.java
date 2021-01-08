@@ -11,12 +11,14 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
+import com.example.quizapp.core.treadPool.ThreadingProvider;
 import com.example.quizapp.databinding.FragmentQuizBinding;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     private int category = 10;
 
     @Inject
+    ThreadingProvider provider;
+
+    @Inject
     QuizFragmentContract.PresenterListener presenterListener;
 
     @Inject
@@ -39,8 +44,15 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(getActivity().findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
-        presenterListener.setViewListener(this);
+        presenterListener.setViewListener(this, getContext());
         setListeners();
+        //Works!
+        provider.getMainThread().post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getContext(), "Works", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
