@@ -2,7 +2,6 @@ package com.example.quizapp.core.presenters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.quizapp.api.Api;
@@ -27,6 +26,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     private QuizFragmentContract.ViewListener viewListener;
     private int index = 0;
     private int counter = 0;
+    private int currentQuizCategory;
     private int quizCategory = 12;
     private int checkedId;
     @Inject
@@ -41,13 +41,18 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         return checkedId;
     }
 
+    @Override
+    public void setCategory(int category) {
+        this.quizCategory = category;
+    }
+
 
     public void getQuiz(int category, Context context) {
         Api.getInstance().getQuiz(category, new Api.ApiListener() {
             @Override
             public void onQuizReceived(Quiz quiz) {
                 questionList = quiz.getQuestions();
-                setQuestionsInView();
+                setQuestionsInView(context);
             }
 
             @Override
@@ -58,13 +63,13 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     }
 
     @Override
-    public void getNextQuestion(int category, Context context) {
-        if (index == 10 || index == 0 || category != quizCategory) {
+    public void getNextQuestion(Context context) {
+        if (index == 10 || index == 0 || currentQuizCategory != quizCategory) {
             index = 0;
-            getQuiz(category, context);
-            quizCategory = category;
+            getQuiz(quizCategory, context);
+            currentQuizCategory = quizCategory;
         } else
-            setQuestionsInView();
+            setQuestionsInView(context);
 
     }
 
@@ -87,14 +92,18 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
         viewListener.unableRadioGroup();
     }
 
-    private void setQuestionsInView() {
-        Question question = questionList.get(index);
-        index++;
-        List<String> allAnswers = question.getIncorrectAnswers();
-        Random random = new Random();
-        int pos = random.nextInt(allAnswers.size() + 1);
-        allAnswers.add(pos, question.getCorrectAnswer());
-        viewListener.setQuestions(question.getQuestion(), allAnswers, question.getCorrectAnswer());
+    private void setQuestionsInView(Context context) {
+        if (questionList.isEmpty()) {
+            Toast.makeText(context, "Category currently unavailable, please choose another.", Toast.LENGTH_LONG).show();
+        } else {
+            Question question = questionList.get(index);
+            index++;
+            List<String> allAnswers = question.getIncorrectAnswers();
+            Random random = new Random();
+            int pos = random.nextInt(allAnswers.size() + 1);
+            allAnswers.add(pos, question.getCorrectAnswer());
+            viewListener.setQuestions(question.getQuestion(), allAnswers, question.getCorrectAnswer());
+        }
     }
 
     public void saveScore() {
@@ -103,7 +112,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     }
 
 
-    private String getFormattedDate(){
+    private String getFormattedDate() {
         Date date = Calendar.getInstance().getTime();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);

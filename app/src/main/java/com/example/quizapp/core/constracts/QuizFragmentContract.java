@@ -18,12 +18,14 @@ public interface QuizFragmentContract {
     interface PresenterListener{
         void setViewListener(ViewListener viewListener, Context context);
 
-        void getNextQuestion(int category, Context context);
+        void getNextQuestion(Context context);
 
         void submitAnswer(String submittedAnswer);
 
         void radioGroupChecked(int checkedId);
 
         int getCheckedId();
+
+        void setCategory(int category);
     }
 }

@@ -20,6 +20,7 @@ import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.core.treadPool.ThreadingProvider;
 import com.example.quizapp.databinding.FragmentQuizBinding;
+import com.example.quizapp.utilities.CategoryUtilities;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 
 public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements QuizFragmentContract.ViewListener {
 
-    private int category = 10;
 
     @Inject
     ThreadingProvider provider;
@@ -61,7 +61,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     }
 
     private void setListeners() {
-        binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion(category, this.getContext()));
+        binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion( this.getContext()));
         binding.radioGroup.setOnCheckedChangeListener((group, checkedId) -> presenterListener.radioGroupChecked(checkedId));
         binding.btnSubmitAnswer.setOnClickListener((view) -> presenterListener.submitAnswer(((RadioButton)getActivity().findViewById(presenterListener.getCheckedId())).getText().toString()));
     }
@@ -76,14 +76,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.category_geography:
-                this.category = 22;
-                break;
-            case R.id.category_music:
-                this.category = 12;
-                break;
-        }
+        presenterListener.setCategory(CategoryUtilities.defineSelectedCategory(item));
         return super.onOptionsItemSelected(item);
     }
 

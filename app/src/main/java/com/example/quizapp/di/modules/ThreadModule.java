@@ -19,11 +19,6 @@ import dagger.Provides;
 @Module
 public class ThreadModule {
 
-//    @Provides
-//    public ThreadingProvider provideThreadingProvider(){
-//        return new ThreadingProvider();
-//    }
-
     @Provides
     @Singleton
     public Executor provideExecutor() {
