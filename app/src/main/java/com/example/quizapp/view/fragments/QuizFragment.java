@@ -20,6 +20,7 @@ import com.example.quizapp.R;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.core.treadPool.ThreadingProvider;
 import com.example.quizapp.databinding.FragmentQuizBinding;
+import com.example.quizapp.model.database.ScoreDbService;
 import com.example.quizapp.utilities.CategoryUtilities;
 
 import java.util.List;
@@ -31,10 +32,11 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
 
 
     @Inject
-    ThreadingProvider provider;
-
-    @Inject
     QuizFragmentContract.PresenterListener presenterListener;
+    @Inject
+    ScoreDbService scoreDbService;
+    @Inject
+    ThreadingProvider provider;
 
     @Inject
     public QuizFragment() {
@@ -44,15 +46,11 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     protected void onFragmentCreated(View view, Bundle savedInstanceState) {
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(getActivity().findViewById(R.id.toolbar));
         setHasOptionsMenu(true);
+        scoreDbService.setThreadingProvider(provider);
+        presenterListener.setScoreDbService(scoreDbService);
+//        presenterListener.getNextQuestion(getContext());
         presenterListener.setViewListener(this, getContext());
         setListeners();
-        //Works!
-        provider.getMainThread().post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getContext(), "Works", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override
@@ -63,13 +61,23 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     private void setListeners() {
         binding.btnNextQuestion.setOnClickListener(v -> presenterListener.getNextQuestion( this.getContext()));
         binding.radioGroup.setOnCheckedChangeListener((group, checkedId) -> presenterListener.radioGroupChecked(checkedId));
-        binding.btnSubmitAnswer.setOnClickListener((view) -> presenterListener.submitAnswer(((RadioButton)getActivity().findViewById(presenterListener.getCheckedId())).getText().toString()));
+        binding.btnSubmitAnswer.setOnClickListener((view) -> presenterListener.submitAnswer
+                (((RadioButton) Objects.requireNonNull(getActivity()).findViewById(presenterListener.getCheckedId())).getText().toString()));
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.drawer_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showCounterTextViewFromToolbar();
+    }
+    private void showCounterTextViewFromToolbar() {
+        Objects.requireNonNull(getActivity()).findViewById(R.id.counter_txt).setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -91,6 +99,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
             binding.radioGroup.addView(radioButton);
         }
         setEnabledOrDisabled(false);
+        binding.btnNextQuestion.setEnabled(false);
     }
 
     @Override
@@ -109,6 +118,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
         setEnabledOrDisabled(true);
         binding.btnSubmitAnswer.setEnabled(false);
         setHasOptionsMenu(checkedId != R.id.correct_answer_radio_button);
+        binding.btnNextQuestion.setEnabled(true);
     }
 
     private void setEnabledOrDisabled(boolean isEnabled) {

@@ -1,7 +1,9 @@
 package com.example.quizapp.utilities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.quizapp.R;
 
@@ -10,6 +12,7 @@ public class CategoryUtilities {
     public static int defineSelectedCategory(MenuItem menuItem){
         switch (menuItem.getItemId()) {
             case R.id.category_books:
+                //Toast.makeText(context, "The next question will be category: " , Toast.LENGTH_SHORT).show();
                 return 10;
             case R.id.category_films:
                 return 11;

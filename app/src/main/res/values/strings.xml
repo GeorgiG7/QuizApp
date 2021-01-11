@@ -32,4 +32,6 @@
     <string name="gadgets">Gadgets</string>
     <string name="japanese_anime_and_manga">Japanese Anime and Manga</string>
     <string name="cartoon_and_animations">Cartoon and animations</string>
+    <string name="date">Date:  </string>
+    <string name="score">Score:  </string>
 </resources>

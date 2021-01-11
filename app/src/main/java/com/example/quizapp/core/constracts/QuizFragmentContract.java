@@ -5,6 +5,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 
+import com.example.quizapp.model.database.ScoreDbService;
+
 import java.util.List;
 
 public interface QuizFragmentContract {
@@ -27,5 +29,6 @@ public interface QuizFragmentContract {
         int getCheckedId();
 
         void setCategory(int category);
+        void setScoreDbService(ScoreDbService service);
     }
 }

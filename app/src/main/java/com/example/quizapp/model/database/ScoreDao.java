@@ -10,4 +10,7 @@ public interface ScoreDao {
 
     @Insert
     void saveScore(Score score);
+
+    @Query("SELECT * FROM scores ORDER BY result DESC limit 11")
+    List<Score> getBestTenScores();
 }

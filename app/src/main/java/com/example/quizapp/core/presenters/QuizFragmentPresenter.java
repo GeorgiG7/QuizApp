@@ -29,8 +29,8 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     private int currentQuizCategory;
     private int quizCategory = 12;
     private int checkedId;
-    @Inject
-    ScoreDbService service;
+
+    private ScoreDbService service;
 
     @Override
     public void setViewListener(QuizFragmentContract.ViewListener viewListener, Context context) {
@@ -44,6 +44,11 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     @Override
     public void setCategory(int category) {
         this.quizCategory = category;
+    }
+
+    @Override
+    public void setScoreDbService(ScoreDbService service) {
+        this.service = service;
     }
 
 

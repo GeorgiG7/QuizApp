@@ -15,22 +15,23 @@ import javax.inject.Inject;
 
 public class ScoreDbService {
     private final ScoreDao scoreDao;
-    @Inject
-    ThreadingProvider threadingProvider;
+    private  ThreadingProvider threadingProvider;
 
-    @Inject
     public ScoreDbService(Context context) {
         scoreDao = Database.getInstance(context).scoreDao();
+
     }
 
+    public void setThreadingProvider(ThreadingProvider threadingProvider) {
+        this.threadingProvider = threadingProvider;
+    }
 
-//
-//    public void getAllScores(DataListener<List<Score>> dataListener){
-//        threadingProvider.getDbExecutor().execute(() -> {
-//            List<Score> allScores = scoreDao.getAllScores();
-//            threadingProvider.getMainThread().post(() -> dataListener.onData(allScores));
-//        });
-//    }
+    public void getAllScores(DataListener<List<Score>> dataListener){
+        threadingProvider.getDbExecutor().execute(() -> {
+            List<Score> allScores = scoreDao.getBestTenScores();
+            threadingProvider.getMainThread().post(() -> dataListener.onData(allScores));
+        });
+    }
 
     public void saveScore(Score score){
         threadingProvider.getDbExecutor().execute(() -> scoreDao.saveScore(score));
