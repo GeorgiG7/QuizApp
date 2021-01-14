@@ -83,8 +83,7 @@ public class QuizFragment extends BaseFragment<FragmentQuizBinding> implements Q
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        presenterListener.setCategory(CategoryUtilities.defineSelectedCategory(item));
+        presenterListener.setCategory(CategoryUtilities.defineSelectedCategory(item, getContext()));
         return super.onOptionsItemSelected(item);
     }
 

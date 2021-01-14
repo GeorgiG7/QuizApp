@@ -10,6 +10,7 @@ import com.example.quizapp.model.Question;
 import com.example.quizapp.model.Quiz;
 import com.example.quizapp.model.database.Score;
 import com.example.quizapp.model.database.ScoreDbService;
+import com.example.quizapp.utilities.ScoresUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
     private int checkedId;
 
     private ScoreDbService service;
+
 
     @Override
     public void setViewListener(QuizFragmentContract.ViewListener viewListener, Context context) {
@@ -119,7 +121,6 @@ public class QuizFragmentPresenter implements QuizFragmentContract.PresenterList
 
     private String getFormattedDate() {
         Date date = Calendar.getInstance().getTime();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.format(date);
+        return ScoresUtility.getSimpleDataFormatInstance().format(date);
     }
 }

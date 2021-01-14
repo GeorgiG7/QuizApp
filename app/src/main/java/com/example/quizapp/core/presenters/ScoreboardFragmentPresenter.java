@@ -3,6 +3,7 @@ package com.example.quizapp.core.presenters;
 import com.example.quizapp.core.constracts.QuizFragmentContract;
 import com.example.quizapp.core.constracts.ScoreboardFragmentContract;
 import com.example.quizapp.model.database.ScoreDbService;
+import com.example.quizapp.utilities.ScoresUtility;
 
 public class ScoreboardFragmentPresenter implements ScoreboardFragmentContract.PresenterListener {
 
@@ -21,6 +22,9 @@ public class ScoreboardFragmentPresenter implements ScoreboardFragmentContract.P
 
     @Override
     public void getScoresFromDb() {
-        service.getAllScores(data -> viewListener.setScoresToRecView(data));
+        service.getAllScores(data -> {
+            ScoresUtility.sortEqualScoresByDate(data);
+            viewListener.setScoresToRecView(data);
+        });
     }
 }

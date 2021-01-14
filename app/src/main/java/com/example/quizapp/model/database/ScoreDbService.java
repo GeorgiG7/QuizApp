@@ -7,6 +7,7 @@ import android.os.Looper;
 
 import com.example.quizapp.core.treadPool.ThreadingProvider;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,7 +30,13 @@ public class ScoreDbService {
     public void getAllScores(DataListener<List<Score>> dataListener){
         threadingProvider.getDbExecutor().execute(() -> {
             List<Score> allScores = scoreDao.getBestTenScores();
-            threadingProvider.getMainThread().post(() -> dataListener.onData(allScores));
+            threadingProvider.getMainThread().post(() -> {
+                try {
+                    dataListener.onData(allScores);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            });
         });
     }
 
@@ -40,6 +47,6 @@ public class ScoreDbService {
 
 
     public interface DataListener<T> {
-        void onData(T data);
+        void onData(T data) throws ParseException;
     }
 }
